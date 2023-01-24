@@ -478,14 +478,15 @@ function cargarGastosWeb()
         this.handleEvent = function(event)
         {
             event.preventDefault();
-            let response  = fetch( "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/pierosormani/0", {
-                method: 'GET',
-                body: JSON.stringify(gp.cargarGastos())
+          let promise =  fetch('https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/pierosormani/0')
+            .then(function(response){
+                return response.text();
             })
-            
-            let result = response.json();
-            alert(result);
-            
+            .then(function(text){
+                alert(text);
+            })
+            .then(response => response.json())
+            .then(user => alert(user.name));
            
            
             repintar();
