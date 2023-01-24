@@ -473,6 +473,20 @@ function cargarGastosWeb()
     botCar.addEventListener('click', new cargarGastosWeb());
 
 
+    async function cargarGastosApi()
+    {
+        this.handleEvent = function(fetc)
+        {
+            fetc.preventDefault();
+            let traer = fetch( "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/antonioroig/0.")
+           
+        }
+    }
+
+    let botFetc = document.getElementById('cargar-gastos-api');
+    botFetc.addEventListener('click', cargarGastosApi());
+
+
 
 
 
@@ -493,5 +507,6 @@ SubmitHandleForm,
 SubmitHandle,
 filtrarGastosWeb,
 guardarGastosWeb,
-cargarGastosWeb
+cargarGastosWeb,
+cargarGastosApi
 }
