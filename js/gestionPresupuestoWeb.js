@@ -475,11 +475,20 @@ function cargarGastosWeb()
 
     async function cargarGastosApi()
     {
-        this.handleEvent = function(fetc)
+        this.handleEvent = function(event)
         {
-            fetc.preventDefault();
-            let traer = fetch( "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/PieroSormani/.")
+            event.preventDefault();
+            let response  = fetch( "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/pierosormani/0", {
+                method: 'GET',
+                body: JSON.stringify(gp.cargarGastos())
+            })
+            
+            let result = response.json();
+            alert(result);
+            
            
+           
+            repintar();
         }
     }
 
