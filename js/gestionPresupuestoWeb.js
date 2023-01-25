@@ -473,28 +473,29 @@ function cargarGastosWeb()
     botCar.addEventListener('click', new cargarGastosWeb());
 
 
-    async function cargarGastosApi()
+    function cargarGastosApi()
     {
+        
         this.handleEvent = function(event)
         {
+            let nom = document.getElementById('nombre_usuario').value;
             event.preventDefault();
-          let promise =  fetch('https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/pierosormani/0')
-            .then(function(response){
-                return response.text();
-            })
-            .then(function(text){
-                alert(text);
-            })
+          let promise =  fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nom}`)
             .then(response => response.json())
-            .then(user => alert(user.name));
+            .then(respuesta => gp.cargarGastos(respuesta))
+           console.log(respuesta);
+            
+            
+
+              
+           repintar();
            
-           
-            repintar();
         }
     }
 
+
     let botFetc = document.getElementById('cargar-gastos-api');
-    botFetc.addEventListener('click', cargarGastosApi());
+    botFetc.addEventListener('click', new cargarGastosApi());
 
 
 
