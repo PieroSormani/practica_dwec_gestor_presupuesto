@@ -482,14 +482,11 @@ function cargarGastosWeb()
             event.preventDefault();
           let promise =  fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nom}`)
             .then(response => response.json())
-            .then(respuesta => gp.cargarGastos(respuesta))
-           console.log(respuesta);
-            
-            
-
-              
-           repintar();
-           
+            .then(respuesta => {gp.cargarGastos(respuesta);
+                repintar();
+            })
+                       
+          
         }
     }
 
