@@ -1,4 +1,4 @@
-
+'use strict'
 
 
 import * as gp from './gestionPresupuesto.js';
@@ -109,9 +109,18 @@ function mostrarGastoWeb(idElemento, gasto) //mostrargpWeb
 
         
 
+        //Boton de borrar gasto api
+
+        let botBorGasApi = document.createElement('button');
+        botBorGasApi.type = 'button';
+        botBorGasApi.className = 'gasto-borrar-api';
+        botBorGasApi.innerHTML = 'Borrar gastos api';
+
+        let borApi = new BorrarGastoApi();
+        borApi.gasto = gasto;
+        botBorGasApi.addEventListener('click', borApi);
+        divGas.append(botBorGasApi);
         
-
-
 
     }
 }
@@ -490,9 +499,28 @@ function cargarGastosWeb()
         }
     }
 
-
     let botFetc = document.getElementById('cargar-gastos-api');
     botFetc.addEventListener('click', new cargarGastosApi());
+
+    function BorrarGastoApi()
+    {
+        
+        this.handleEvent = function(event)
+        {
+            let nom = document.getElementById('nombre_usuario').value;
+            event.preventDefault();
+          let promise =  fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nom}/${this.gasto.id}`, {method: 'DELETE'})
+           .then(response => console.log('Deleted'));
+            
+                
+            
+                       
+          
+        }
+    }
+
+    
+
 
 
 
@@ -516,5 +544,6 @@ SubmitHandle,
 filtrarGastosWeb,
 guardarGastosWeb,
 cargarGastosWeb,
-cargarGastosApi
+cargarGastosApi,
+BorrarGastoApi
 }
