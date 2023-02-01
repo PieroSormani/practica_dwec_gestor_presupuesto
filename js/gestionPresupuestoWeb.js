@@ -120,6 +120,12 @@ function mostrarGastoWeb(idElemento, gasto) //mostrargpWeb
         borApi.gasto = gasto;
         botBorGasApi.addEventListener('click', borApi);
         divGas.append(botBorGasApi);
+
+
+         //Boton de enviar gasto api
+
+        
+         
         
 
     }
@@ -213,8 +219,12 @@ function nuevoGastoWeb ()
     let fec = Date.parse(prompt('Introduzca la fecha del gasto'));
     let etiq = prompt('Introduzca las etiquetas del gasto').split(',');
     let gas = new gp.CrearGasto(desc, valFloat, fec,...etiq);
-    gp.anyadirGasto(gas);
+    let botpostGasApi = document.createElement('button');
+    botpostGasApi.type = 'button';
+    botpostGasApi.className = 'gasto-enviar-api';
+    botpostGasApi.innerHTML = 'Enviar gastos api';
 
+    
     repintar()
 
 
@@ -348,6 +358,13 @@ function nuevoGastoWebFormulario(){
 
     let enviar = new SubmitHandleForm();
     formulario.addEventListener('submit', enviar);
+
+
+    let botEnviarApi = formulario.querySelector('button.gasto-enviar-api');
+    botEnviarApi.addEventListener('click', new EnviarGastoApi());
+   
+    gp.anyadirGasto(gasForm);
+
 }
 
 let gasForm = document.getElementById('anyadirgasto-formulario');
@@ -510,14 +527,52 @@ function cargarGastosWeb()
             let nom = document.getElementById('nombre_usuario').value;
             event.preventDefault();
           let promise =  fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nom}/${this.gasto.gastoId}`, {method: 'DELETE'})
-           .then(response => console.log('Deleted'));
-            
-                
-            
-                       
+           .then(response => console.log('Deleted'));        
           
         }
     }
+
+
+    function EnviarGastoApi()
+    {
+        
+        this.handleEvent = function(event)
+        {
+            
+            let nom = document.getElementById('nombre_usuario').value;
+            event.preventDefault();
+
+            let formu = document.querySelector('formulario-template')
+            let data = event.currentTarget.form;
+            let val = parseFloat(data.elements.valor.value);
+            let etiq = data.elements.etiquetas.value;
+            let desc = data.elements.descripcion.value;
+            let fec = data.elements.fecha.value;
+
+
+            let gastoJason = {
+
+                valor : val,
+                descripcion : desc,
+                fecha : fec,
+                etiquetas : etiq,
+                
+
+            }
+
+
+            console.log(nom);
+            let promise =  fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nom}`, {method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+              },
+            body: JSON.stringify(gastoJason)})
+           
+           .then(console.log('Posted'));        
+          
+        }
+    }
+
 
     
 
@@ -545,5 +600,6 @@ filtrarGastosWeb,
 guardarGastosWeb,
 cargarGastosWeb,
 cargarGastosApi,
-BorrarGastoApi
+BorrarGastoApi,
+EnviarGastoApi
 }
