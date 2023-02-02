@@ -316,7 +316,14 @@ function EditarHandleformulario()
         sub.gasto = this.gasto;
         formu.addEventListener('submit', sub);
 
+       let editApi = new EditarGastoApi();
+       let boteditApi = formu.querySelector("button.gasto-editar-api")
+       boteditApi.addEventListener('click', editApi);
+
         bF.setAttribute('disabled', "");
+
+
+        
 
         
     }
@@ -542,7 +549,7 @@ function cargarGastosWeb()
             let nom = document.getElementById('nombre_usuario').value;
             event.preventDefault();
 
-            let formu = document.querySelector('formulario-template')
+            //let formu = document.querySelector('formulario-template')
             let data = event.currentTarget.form;
             let val = parseFloat(data.elements.valor.value);
             let etiq = data.elements.etiquetas.value;
@@ -569,6 +576,47 @@ function cargarGastosWeb()
             body: JSON.stringify(gastoJason)})
            
            .then(console.log('Posted'));        
+          
+        }
+    }
+
+
+    function EditarGastoApi()
+    {
+        
+        this.handleEvent = function(event)
+        {
+            
+            let nom = document.getElementById('nombre_usuario').value;
+            event.preventDefault();
+
+            //let formu = document.querySelector('formulario-template')
+            let data = event.currentTarget.form;
+            let val = parseFloat(data.elements.valor.value);
+            let etiq = data.elements.etiquetas.value;
+            let desc = data.elements.descripcion.value;
+            let fec = data.elements.fecha.value;
+
+
+            let gastoJason = {
+
+                valor : val,
+                descripcion : desc,
+                fecha : fec,
+                etiquetas : etiq,
+                
+
+            }
+
+
+            console.log(nom);
+            let promise =  fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nom}/${id}`, {method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+              },
+            body: JSON.stringify(gastoJason)})
+           
+           .then(console.log('Edited'));        
           
         }
     }
@@ -601,5 +649,6 @@ guardarGastosWeb,
 cargarGastosWeb,
 cargarGastosApi,
 BorrarGastoApi,
-EnviarGastoApi
+EnviarGastoApi,
+EditarGastoApi
 }
