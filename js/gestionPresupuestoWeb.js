@@ -317,6 +317,7 @@ function EditarHandleformulario()
         formu.addEventListener('submit', sub);
 
        let editApi = new EditarGastoApi();
+       editApi.gasto = this.gasto;
        let boteditApi = formu.querySelector("button.gasto-editar-api")
        boteditApi.addEventListener('click', editApi);
 
@@ -534,7 +535,8 @@ function cargarGastosWeb()
             let nom = document.getElementById('nombre_usuario').value;
             event.preventDefault();
           let promise =  fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nom}/${this.gasto.gastoId}`, {method: 'DELETE'})
-           .then(response => console.log('Deleted'));        
+           .then(response => console.log('Deleted'))
+           .then(new cargarGastosApi());        
           
         }
     }
@@ -575,7 +577,8 @@ function cargarGastosWeb()
               },
             body: JSON.stringify(gastoJason)})
            
-           .then(console.log('Posted'));        
+           .then(console.log('Posted'))
+           .then(new cargarGastosApi());         
           
         }
     }
@@ -597,6 +600,7 @@ function cargarGastosWeb()
             let desc = data.elements.descripcion.value;
             let fec = data.elements.fecha.value;
 
+             
 
             let gastoJason = {
 
@@ -616,7 +620,9 @@ function cargarGastosWeb()
               },
             body: JSON.stringify(gastoJason)})
            
-           .then(console.log('Edited'));        
+           .then(console.log('Edited'))
+           .then(new cargarGastosApi(), console.log(new cargarGastosApi()))
+           .then(repintar());         
           
         }
     }
