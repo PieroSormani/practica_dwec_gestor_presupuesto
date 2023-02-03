@@ -612,6 +612,8 @@ function cargarGastosWeb()
 
             }
 
+           
+
 
             console.log(nom);
             let promise =  fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nom}/${this.gasto.gastoId}`, {method: 'PUT',
