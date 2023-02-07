@@ -24,9 +24,35 @@
             </button>
             <button type="button" id="guardar-gastos">Guardar Gastos</button>
             <button type="button" id="cargar-gastos">Cargar Gastos</button>
-           
+            
             <button type="button" id="cargar-gastos-api">Cargar Gastos (API)</button>
             <input type="text" id="nombre_usuario">
+          </div>
+            <template id="formulario-template">
+              <form>
+                  <div class="form-control">
+                      <label for="descripcion">Descripción</label>
+                      <input type="text" name="descripcion" id="descripcion">
+                  </div>
+                  <div class="form-control">
+                      <label for="valor">Valor</label>
+                      <input type="number" step="0.01" name="valor" id="valor">
+                  </div>
+                  <div class="form-control">
+                      <label for="fecha">Fecha</label>
+                      <input type="date" name="fecha" id="fecha">
+                  </div>
+                  <div class="form-control">
+                      <label for="etiquetas">Etiquetas</label>
+                      <input type="text" name="etiquetas" id="etiquetas">
+                  </div>
+                  <button type="submit">Enviar</button>
+                  
+                  <button type="button" class="gasto-editar-api">Editar (API)</button>
+                  <button type="button" id="gasto-enviar-api">Enviar Gastos Api</button>
+                  <button class="cancelar" type="button">Cancelar</button>
+              </form>
+          </template>
 
 
 
@@ -69,7 +95,7 @@
               
 
 
-            </div>
+            
 
         </div>
 
@@ -84,30 +110,7 @@
         <script type="module" src="js/generarDatosEstaticos.js"></script>
        
 
-        <template id="formulario-template">
-          <form>
-              <div class="form-control">
-                  <label for="descripcion">Descripción</label>
-                  <input type="text" name="descripcion" id="descripcion">
-              </div>
-              <div class="form-control">
-                  <label for="valor">Valor</label>
-                  <input type="number" step="0.01" name="valor" id="valor">
-              </div>
-              <div class="form-control">
-                  <label for="fecha">Fecha</label>
-                  <input type="date" name="fecha" id="fecha">
-              </div>
-              <div class="form-control">
-                  <label for="etiquetas">Etiquetas</label>
-                  <input type="text" name="etiquetas" id="etiquetas">
-              </div>
-              <button type="submit">Enviar</button>
-              <button type="button" class="gasto-editar-api">Editar (API)</button>
 
-              <button class="cancelar" type="button">Cancelar</button>
-          </form>
-      </template>
       <div id="filtrar-gastos">
         <h2>Filtrar gastos</h2>
         <form id="formulario-filtrado">

@@ -320,6 +320,7 @@ function EditarHandleformulario()
        editApi.gasto = this.gasto;
        let boteditApi = formu.querySelector("button.gasto-editar-api")
        boteditApi.addEventListener('click', editApi);
+       
 
         bF.setAttribute('disabled', "");
 
@@ -368,8 +369,8 @@ function nuevoGastoWebFormulario(){
     formulario.addEventListener('submit', enviar);
 
 
-    let botEnviarApi = formulario.querySelector('button.gasto-enviar-api');
-    botEnviarApi.addEventListener('click', new EnviarGastoApi());
+       let botEnviarApi = formulario.querySelector('button.gasto-enviar-api');
+       botEnviarApi.addEventListener('click', new EnviarGastoApi());
    
     gp.anyadirGasto(gasForm);
 
@@ -524,6 +525,17 @@ function cargarGastosWeb()
         }
     }
 
+    function cargaloTodo()
+    {
+        let nom = document.getElementById('nombre_usuario').value;
+        let promise =  fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nom}`)
+            .then(response => response.json())
+            .then(respuesta =>  {
+                gp.cargarGastos(respuesta);
+                repintar();
+            });            
+    }
+
     let botFetc = document.getElementById('cargar-gastos-api');
     botFetc.addEventListener('click', new cargarGastosApi());
 
@@ -536,8 +548,7 @@ function cargarGastosWeb()
             event.preventDefault();
           let promise =  fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nom}/${this.gasto.gastoId}`, {method: 'DELETE'})
            .then(response => console.log('Deleted'))
-           .then(new cargarGastosApi());        
-          
+           .then(()=>cargaloTodo())
         }
     }
 
@@ -558,6 +569,7 @@ function cargarGastosWeb()
             let desc = data.elements.descripcion.value;
             let fec = data.elements.fecha.value;
 
+             
 
             let gastoJason = {
 
@@ -577,8 +589,8 @@ function cargarGastosWeb()
               },
             body: JSON.stringify(gastoJason)})
            
-           .then(console.log('Posted'))
-           .then(new cargarGastosApi());         
+           .then(console.log('Posted'));
+           //.then(()=>cargaloTodo());
           
         }
     }
@@ -621,10 +633,11 @@ function cargarGastosWeb()
                 'Content-Type': 'application/json;charset=utf-8'
               },
             body: JSON.stringify(gastoJason)})
-           
-           .then(console.log('Edited'))
-           .then(new cargarGastosApi(), console.log(new cargarGastosApi()))
-           .then(repintar());         
+            
+            .then(()=>cargaloTodo())
+            .then(console.log('Edited'));
+          
+               
           
         }
     }
