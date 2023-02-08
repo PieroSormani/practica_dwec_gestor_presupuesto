@@ -219,11 +219,12 @@ function nuevoGastoWeb ()
     let fec = Date.parse(prompt('Introduzca la fecha del gasto'));
     let etiq = prompt('Introduzca las etiquetas del gasto').split(',');
     let gas = new gp.CrearGasto(desc, valFloat, fec,...etiq);
+    /*
     let botpostGasApi = document.createElement('button');
     botpostGasApi.type = 'button';
     botpostGasApi.className = 'gasto-enviar-api';
     botpostGasApi.innerHTML = 'Enviar gastos api';
-
+*/
     
     repintar()
 
@@ -320,6 +321,8 @@ function EditarHandleformulario()
        editApi.gasto = this.gasto;
        let boteditApi = formu.querySelector("button.gasto-editar-api")
        boteditApi.addEventListener('click', editApi);
+
+       formu.querySelector("button.gasto-enviar-api");
        
 
         bF.setAttribute('disabled', "");
@@ -369,10 +372,12 @@ function nuevoGastoWebFormulario(){
     formulario.addEventListener('submit', enviar);
 
 
-       let botEnviarApi = formulario.querySelector('button.gasto-enviar-api');
+       let botEnviarApi = document.getElementById('gasto-enviar-api');
        botEnviarApi.addEventListener('click', new EnviarGastoApi());
-   
-    gp.anyadirGasto(gasForm);
+ 
+      
+       
+    //gp.anyadirGasto(gasForm);
 
 }
 
@@ -389,12 +394,13 @@ function SubmitHandleForm(){
         let desc = data.elements.descripcion.value;
         let fec = data.elements.fecha.value;
 
-        let id = document.getElementById('anyadirgasto-formulario').removeAttribute("disabled");
+      
         
         let gas = new gp.CrearGasto(desc,val,fec,...etiq);
         gp.anyadirGasto(gas);
 
         repintar();
+        document.getElementById('anyadirgasto-formulario').removeAttribute("disabled");
         
     }
 
@@ -589,8 +595,8 @@ function cargarGastosWeb()
               },
             body: JSON.stringify(gastoJason)})
            
-           .then(console.log('Posted'));
-           //.then(()=>cargaloTodo());
+           .then(console.log('Posted'))
+           .then(()=>cargaloTodo());
           
         }
     }
