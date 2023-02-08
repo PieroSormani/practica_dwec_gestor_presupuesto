@@ -571,7 +571,7 @@ function cargarGastosWeb()
             //let formu = document.querySelector('formulario-template')
             let data = event.currentTarget.form;
             let val = parseFloat(data.elements.valor.value);
-            let etiq = data.elements.etiquetas.value;
+            let etiq = data.elements.etiquetas.value.split(',');
             let desc = data.elements.descripcion.value;
             let fec = data.elements.fecha.value;
 
@@ -614,7 +614,7 @@ function cargarGastosWeb()
             //let formu = document.querySelector('formulario-template')
             let data = event.currentTarget.form;
             let val = parseFloat(data.elements.valor.value);
-            let etiq = data.elements.etiquetas.value;
+            let etiq = data.elements.etiquetas.value.split(',');
             let desc = data.elements.descripcion.value;
             let fec = data.elements.fecha.value;
 
